@@ -9,21 +9,24 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .btn-info {
+            color: white;
+        }
+    </style>
+    @yield('css')
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -83,11 +86,19 @@
                             {{ session()->get('success') }}
                         </div>
                     @endif
+                    @if (session()->has('error'))
+                        <div class="alert alert-danger">
+                            {{ session()->get('error') }}
+                        </div>
+                    @endif
                     <div class="row">
                         <div class="col-md-4">
                             <ul class="list-group">
                                 <li class="list-group-item">
                                     <a href="{{ route('posts.index') }}">Posts</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{{ route('tags.index') }}">Tags</a>
                                 </li>
                                 <li class="list-group-item">
                                     <a href="{{ route('categories.index') }}">Categories</a>
@@ -109,7 +120,8 @@
             @endauth
         </main>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
     @yield('scripts')
 </body>
 </html>
